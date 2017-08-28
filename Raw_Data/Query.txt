@@ -1,0 +1,27 @@
+declare @start INT
+
+set @start = -5
+
+select id, acceptedanswerid, title, body from posts
+
+where CreationDate between DateAdd(month, @start, '2017-08-30') and DateAdd(month, @start+1, '2017-08-30') and acceptedanswerid is not null
+
+order by id asc
+
+
+
+
+select parentid, id, body from posts
+
+where id in (select acceptedanswerid from posts where CreationDate between DateAdd(month, @start, '2017-08-30') and DateAdd(month, @start+1, '2017-08-30') and acceptedanswerid is not null)
+
+order by parentid asc
+
+
+
+
+select id, title, body from posts
+
+where CreationDate between DateAdd(month, @start, '2017-08-30') and DateAdd(month, @start+1, '2017-08-30') and acceptedanswerid is null and parentid is null
+
+order by id asc
